@@ -8,6 +8,7 @@ package Analizadores;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
+  public static final int EXPOLACA = 11;
   public static final int PTCOMA = 2;
   public static final int VARIABLE = 8;
   public static final int EOF = 0;
@@ -16,7 +17,7 @@ public class sym {
   public static final int PARIZQ = 7;
   public static final int FLECH = 9;
   public static final int LLAVDER = 3;
-  public static final int PR_CONJ = 11;
+  public static final int PR_CONJ = 12;
   public static final int error = 1;
   public static final int DOSPTS = 5;
   public static final int PARDER = 6;
@@ -32,6 +33,7 @@ public class sym {
   "VARIABLE",
   "FLECH",
   "NOTACION",
+  "EXPOLACA",
   "PR_CONJ"
   };
 }

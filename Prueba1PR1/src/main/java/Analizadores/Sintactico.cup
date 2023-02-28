@@ -18,7 +18,7 @@ parser code
 /* 3. Terminales */
 terminal String PTCOMA,LLAVDER,LLAVIZQ;
 terminal String DOSPTS,PARDER,PARIZQ,VARIABLE;
-terminal String FLECH,NOTACION;
+terminal String FLECH,NOTACION,EXPOLACA;
 terminal String PR_CONJ;
 
 
@@ -27,6 +27,7 @@ non terminal ini;
 non terminal instrucciones;
 non terminal instruccion;
 non terminal expresion;
+non terminal exppolaca;
 
 
 /* 5. Precedencias */
@@ -52,14 +53,32 @@ instruccion ::=
          resultados.add("El valor de la Variable es: "+a);
          resultados.add("El valor de la Notacion es: "+b);
     :}
-//| expresion:a FLECH
+
+|   expresion:a FLECH exppolaca:b PTCOMA
+{:
+        System.out.println("El valor de la expresión es: "+a);
+    
+        //Inserto en la lista el resultado de la expresión evaluada
+         resultados.add("El valor de la Variable es: "+a);
+         resultados.add("El valor de la Polaca es: "+b);
+    :}
+|   error PTCOMA {:
+        //Aqui activa el Panic Mode al encontrar un punto y coma y reporta el error sintactico
+    :} 
 ;
 
 
 expresion  ::= 
     VARIABLE:a                             {:RESULT=new String(a);:} 
-|  PARIZQ expresion:a PARDER               {:RESULT=a;:}
 |   NOTACION:a                             {:RESULT=new String(a);:}
+;
+
+
+
+
+exppolaca   ::=   
+    VARIABLE:a                             {:RESULT=new String(a);:}                         
+|   EXPOLACA:a                                {:RESULT=new String(a);:} 
 ;
 
 

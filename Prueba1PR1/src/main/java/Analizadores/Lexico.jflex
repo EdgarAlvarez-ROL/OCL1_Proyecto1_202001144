@@ -39,14 +39,16 @@ InputCharacter = [^\r\n]
 
 comentariosimple = "//" {InputCharacter}* {LineTerminator}?
 comentariovariaslineas = (\<\!(\s*|.*?)*\!\>)
-
+SEPARADOR = "%%"?
 
 CaracteresAscii = [\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}]
 CaracteresEspeciales = (\\(n)) | (\\(')) | (\\(')('))
 
-Variable = [a-zA-Z_]+[a-zA-Z0-9_]*
-Notacion = [a-zA-Z]\~[a-zA-Z] | [0-9]\~[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii}),)+([a-zA-Z0-9]|{CaracteresAscii})) | (\!\~\&) | {CaracteresAscii}  |  {CaracteresEspeciales}
+NotacionA = [a-zA-Z]\~[a-zA-Z] | [0-9]\~[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii}),)+([a-zA-Z0-9]|{CaracteresAscii})) | (\!\~\&) | {CaracteresAscii}  |  {CaracteresEspeciales}
+VariableA = [a-zA-Z_]+[a-zA-Z0-9_]*
 
+//ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(\;\"))+
+ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresAscii}|{CaracteresEspeciales}|\w|\d)+\"))+
 
 %%
 /* 3. Reglas Semanticas*/
@@ -60,24 +62,26 @@ Notacion = [a-zA-Z]\~[a-zA-Z] | [0-9]\~[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii})
 "}" { System.out.println("Reconocio "+yytext()+" llave cierra"); return new Symbol(sym.LLAVDER,yyline,yychar, yytext());} 
 "{" { System.out.println("Reconocio "+yytext()+" llave abre"); return new Symbol(sym.LLAVIZQ,yyline,yychar, yytext());} 
 
-"~" { System.out.println("Reconocio "+yytext()+" virgurilla"); return new Symbol(sym.VIRGU,yyline,yychar, yytext());} 
 "->" { System.out.println("Reconocio "+yytext()+" flecha"); return new Symbol(sym.FLECH,yyline,yychar, yytext());} 
 ":" { System.out.println("Reconocio "+yytext()+" dos puntos"); return new Symbol(sym.DOSPTS,yyline,yychar, yytext());} 
-"," { System.out.println("Reconocio "+yytext()+" coma"); return new Symbol(sym.COMA,yyline,yychar, yytext());} 
-"%%" { System.out.println("Reconocio "+yytext()+" doblePorcentaje"); return new Symbol(sym.DOPORCENTAJE,yyline,yychar, yytext());} 
-"\"" { System.out.println("Reconocio "+yytext()+" comillas"); return new Symbol(sym.COMILLAS,yyline,yychar, yytext());} 
+
 
 
 \n {yychar=1;}
 
-{BLANCOS} {} 
+{VariableA} {return new Symbol(sym.VARIABLE,yyline,yychar, yytext());} 
+{NotacionA} {return new Symbol(sym.NOTACION,yyline,yychar, yytext());} 
+{ExpresionPolacaA} {return new Symbol(sym.EXPOLACA,yyline,yychar, yytext());}
+
+{BLANCOS} {}
+{SEPARADOR} {}
 {comentariosimple} {System.out.println("Comentario: "+yytext()); }
 {comentariovariaslineas} {System.out.println("Comentario Varias Lineas: "+yytext()); }
-{D} {return new Symbol(sym.ENTERO,yyline,yychar, yytext());} 
-{DD} {return new Symbol(sym.DECIMAL,yyline,yychar, yytext());} 
+//{D} {return new Symbol(sym.ENTERO,yyline,yychar, yytext());} 
+//{DD} {return new Symbol(sym.DECIMAL,yyline,yychar, yytext());} 
 
-{Variable} {return new Symbol(sym.VARIABLE,yyline,yychar, yytext());} 
-{Notacion} {return new Symbol(sym.NOTACION,yyline,yychar, yytext());} 
+
+
 
 . {
     //Aqui se debe guardar los valores (yytext(), yyline, yychar ) para posteriormente generar el reporte de errores Léxicos.
