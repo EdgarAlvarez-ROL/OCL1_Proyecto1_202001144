@@ -15,4 +15,10 @@ decimales -> . +{digito} . "." + {digito};
 %%
 
 
+identificador : "hola_soy_id_1"; //Correcto
+identificador : "HOLA"; //Incorrecto
+
+decimales : "301.59"://incorrecto
+decimales : "1200.31";//correcto
+
 }

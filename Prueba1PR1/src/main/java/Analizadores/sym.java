@@ -17,10 +17,11 @@ public class sym {
   public static final int PARIZQ = 7;
   public static final int FLECH = 9;
   public static final int LLAVDER = 3;
-  public static final int PR_CONJ = 12;
+  public static final int PR_CONJ = 13;
   public static final int error = 1;
   public static final int DOSPTS = 5;
   public static final int PARDER = 6;
+  public static final int EJEXPRE = 12;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -34,6 +35,7 @@ public class sym {
   "FLECH",
   "NOTACION",
   "EXPOLACA",
+  "EJEXPRE",
   "PR_CONJ"
   };
 }

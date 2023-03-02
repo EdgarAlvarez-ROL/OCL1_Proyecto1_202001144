@@ -1,14 +1,14 @@
-
 /* 1. Package e Importaciones */
 package Analizadores;
 import java_cup.runtime.Symbol;
-
 
 %%
 /* 2. Configuarciones para el analisis (Opciones y Declaraciones) j */
 %{
     //Codigo de usuario en sintaxis java
     //Agregar clases, variables, arreglos, objetos etc...
+
+    
 %}
 
 //Directivas
@@ -50,6 +50,8 @@ VariableA = [a-zA-Z_]+[a-zA-Z0-9_]*
 //ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(\;\"))+
 ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresAscii}|{CaracteresEspeciales}|\w|\d)+\"))+
 
+EjemploExpresion = (\"(\'|\"|.*?)*\")
+
 %%
 /* 3. Reglas Semanticas*/
 "CONJ" {  System.out.println("Reconocio PR: "+yytext()); return new Symbol(sym.PR_CONJ,yyline,yychar,yytext());}
@@ -72,6 +74,9 @@ ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresA
 {VariableA} {return new Symbol(sym.VARIABLE,yyline,yychar, yytext());} 
 {NotacionA} {return new Symbol(sym.NOTACION,yyline,yychar, yytext());} 
 {ExpresionPolacaA} {return new Symbol(sym.EXPOLACA,yyline,yychar, yytext());}
+{EjemploExpresion} {return new Symbol(sym.EJEXPRE,yyline,yychar, yytext());}
+
+
 
 {BLANCOS} {}
 {SEPARADOR} {}

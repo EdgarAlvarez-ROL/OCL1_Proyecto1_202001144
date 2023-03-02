@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 /* 2. Codigo para el parser, variables, metodos */
 parser code 
 {:
@@ -12,13 +13,14 @@ parser code
     
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     public List<String> resultados = new ArrayList<String>();
-:} 
+:}  
 
 
 /* 3. Terminales */
 terminal String PTCOMA,LLAVDER,LLAVIZQ;
 terminal String DOSPTS,PARDER,PARIZQ,VARIABLE;
 terminal String FLECH,NOTACION,EXPOLACA;
+terminal String EJEXPRE;
 terminal String PR_CONJ;
 
 
@@ -28,6 +30,7 @@ non terminal instrucciones;
 non terminal instruccion;
 non terminal expresion;
 non terminal exppolaca;
+non terminal ejempexp;
 
 
 /* 5. Precedencias */
@@ -47,7 +50,7 @@ instruccion ::=
    PR_CONJ DOSPTS expresion:a FLECH expresion:b PTCOMA
     {:
     
-        System.out.println("El valor de la expresión es: "+a);
+        System.out.println("El valor de la Variable es: "+a);
     
         //Inserto en la lista el resultado de la expresión evaluada
          resultados.add("El valor de la Variable es: "+a);
@@ -59,8 +62,16 @@ instruccion ::=
         System.out.println("El valor de la expresión es: "+a);
     
         //Inserto en la lista el resultado de la expresión evaluada
-         resultados.add("El valor de la Variable es: "+a);
+         resultados.add("El valor de la Expresion es: "+a);
          resultados.add("El valor de la Polaca es: "+b);
+    :}
+|   expresion:a DOSPTS ejempexp:b PTCOMA
+{:
+        System.out.println("La expresion de prueba es: "+b);
+    
+        //Inserto en la lista el resultado de la expresión evaluada
+        resultados.add("El valor de la Identificador es: "+a);
+        resultados.add("El valor de la Ejemplo es: "+b);
     :}
 |   error PTCOMA {:
         //Aqui activa el Panic Mode al encontrar un punto y coma y reporta el error sintactico
@@ -74,11 +85,11 @@ expresion  ::=
 ;
 
 
-
-
 exppolaca   ::=   
-    VARIABLE:a                             {:RESULT=new String(a);:}                         
-|   EXPOLACA:a                                {:RESULT=new String(a);:} 
+    VARIABLE:a                              {:RESULT=new String(a);:}                         
+|   EXPOLACA:a                              {:RESULT=new String(a);:} 
 ;
 
-
+ejempexp ::=
+    EJEXPRE:a                               {:RESULT=new String(a);:}
+;
