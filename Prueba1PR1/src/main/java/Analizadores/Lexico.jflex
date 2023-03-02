@@ -2,13 +2,16 @@
 package Analizadores;
 import java_cup.runtime.Symbol;
 
+import Errores.Excepcion;
+import java.util.ArrayList;
+
 %%
 /* 2. Configuarciones para el analisis (Opciones y Declaraciones) j */
 %{
     //Codigo de usuario en sintaxis java
     //Agregar clases, variables, arreglos, objetos etc...
 
-    
+    public ArrayList<Excepcion> Errores = new ArrayList();
 %}
 
 //Directivas
@@ -91,4 +94,5 @@ EjemploExpresion = (\"(\'|\"|.*?)*\")
 . {
     //Aqui se debe guardar los valores (yytext(), yyline, yychar ) para posteriormente generar el reporte de errores Léxicos.
     System.out.println("Este es un error lexico: "+yytext()+ ", en la linea: "+yyline+", en la columna: "+yychar);
+    Errores.add(new Excepcion("Léxico", "Caracter no válido detectado: " + yytext(), yyline + "", yychar + ""));
 }

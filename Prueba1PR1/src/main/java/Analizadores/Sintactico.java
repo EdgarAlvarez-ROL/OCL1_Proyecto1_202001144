@@ -8,6 +8,7 @@ package Analizadores;
 import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
+import Errores.Excepcion;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -126,6 +127,31 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     public List<String> resultados = new ArrayList<String>();
+
+
+    //Lista de erros
+    public ArrayList<Excepcion> Errores = new ArrayList();
+
+    /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        Errores.add(new Excepcion("Sintáctico", "Error de sintaxis detectado. Se detectó: " + s.value, s.left + "", s.right + ""));
+    } 
+    
+    /**
+     * Método al que se llama automáticamente ante algún error sintáctico 
+     * en el que ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido."); 
+    }
+
+    public ArrayList<Excepcion> getErrores(){
+        return Errores;
+    }
+
+
 
 
 /** Cup generated class to encapsulate user supplied action code.*/

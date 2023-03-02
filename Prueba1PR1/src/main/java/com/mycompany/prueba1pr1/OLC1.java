@@ -3,12 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/Application.java to edit this template
  */
 package com.mycompany.prueba1pr1;
+
 import Analizadores.Sintactico;
 import Analizadores.Lexico;
+import Errores.Excepcion;
+import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -166,27 +175,92 @@ public class OLC1 extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {   
-                      
-        //Se ejecuta el lexico y sintactico.
-        Sintactico sintactico =new Sintactico(new Lexico(new BufferedReader( new StringReader(jTextArea1.getText()))));
-        sintactico.parse();
         
-        System.out.println(sintactico.resultados);
-        String result = "";
-        for (int i = 0; i < sintactico.resultados.size(); i++) {
-               result += sintactico.resultados.get(i) + '\n';
-        }
-        this.jTextArea2.setText(result);
-      
-        
-            } catch (Exception ex) {
-                    Logger.getLogger(OLC1.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Error fatal en compilación de entrada.");
-//                    System.out.println("Causa: "+ex.getCause());
+        //NUEVO
+        Analizadores.Lexico scanner;
+        Analizadores.Sintactico parse;
+        ArrayList<Excepcion> errores = new ArrayList();
+
+        try {
+
+            scanner = new Lexico(new BufferedReader(new StringReader(jTextArea1.getText())));
+            parse = new Sintactico(scanner);
+            parse.parse();
+            errores.addAll(scanner.Errores);
+            errores.addAll(parse.getErrores());
+
+            generarReporteHTML(errores);
+
+            String result = "";
+            for (int i = 0; i < parse.resultados.size(); i++) {
+                result += parse.resultados.get(i) + '\n';
             }
+            this.jTextArea2.setText(result);
+
+
+        } catch (Exception ex) {
+            Logger.getLogger(OLC1.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error fatal en compilación de entrada.");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    //HCAER HTML
+    public static void generarReporteHTML(ArrayList<Excepcion> errores) throws IOException {
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            
+            String path = "Reporteerrores.html";
+            fichero = new FileWriter(path);
+            pw = new PrintWriter(fichero);
+            
+            //Comenzamos a escribir el html
+            pw.println("<html>");
+            pw.println("<head><title>REPORTE DE ERRORES</title></head>");
+            pw.println("<body>");
+            pw.println("<div align=\"center\">");
+            pw.println("<h1>Reporte de Errores</h1>");
+            pw.println("<br></br>");
+            pw.println("<table border=1>");
+            pw.println("<tr>");
+            pw.println("<td>ERROR</td>");
+            pw.println("<td>DESCRIPCION</td>");
+            pw.println("<td>FILA</td>");
+            pw.println("<td>COLUMNA</td>");
+            pw.println("</tr>");
+
+            for (Excepcion err : errores) {
+                pw.println("<tr>");
+                 pw.println("<td>" + err.tipo + "</td>");
+                pw.println("<td>" + err.descripcion + "</td>");
+                pw.println("<td>" + err.linea + "</td>");
+                pw.println("<td>" + err.columna + "</td>");
+                pw.println("</tr>");
+            }
+
+            pw.println("</table>");
+            pw.println("</div");
+            pw.println("</body>");
+            pw.println("</html>");
+            Desktop.getDesktop().open(new File(path));
+            
+            
+        } catch (Exception e) {
+        } finally {
+            if (null != fichero) {
+                fichero.close();
+            }
+        }
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    //FIN HACER HTML
+    
+    
     /**
      * @param args the command line arguments
      */
