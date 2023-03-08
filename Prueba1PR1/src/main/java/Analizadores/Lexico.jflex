@@ -51,9 +51,9 @@ NotacionA = [a-zA-Z]\~[a-zA-Z] | [0-9]\~[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii}
 VariableA = [a-zA-Z_]+[a-zA-Z0-9_]*
 
 //ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(\;\"))+
-ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresAscii}|{CaracteresEspeciales}|\w|\d)+\"))+
+ExpresionPolacaA = [\.\+\|\?\*\\]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresAscii}|{CaracteresEspeciales}|\w|\d)+\"))+
 
-EjemploExpresion = (\"(\'|\"|.*?)*\")
+EjemploExpresion = (\"(\"|.*?)*\")
 
 %%
 /* 3. Reglas Semanticas*/
