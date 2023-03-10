@@ -9,6 +9,7 @@ import java_cup.runtime.*;
 import java.util.ArrayList;
 import java.util.List;
 import Errores.Excepcion;
+import Objetos.ExpresionRegular;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -128,6 +129,9 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     public List<String> resultados = new ArrayList<String>();
 
+    //Lista de objetos con el ID y la expresion Regular
+    public List<ExpresionRegular> listaExpresiones = new ArrayList<ExpresionRegular>();
+ 
 
     //Lista de erros
     public ArrayList<Excepcion> Errores = new ArrayList();
@@ -262,10 +266,13 @@ class CUP$Sintactico$actions {
 		Object b = (Object)((java_cup.runtime.Symbol) CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-1)).value;
 		
         System.out.println("El valor de la expresión es: "+a);
+        System.out.println("El valor de la Polaca es: "+b);
     
         //Inserto en la lista el resultado de la expresión evaluada
          resultados.add("El valor de la Expresion es: "+a);
-         resultados.add("El valor de la Polaca es: "+b);
+         //listaExpresiones.add("El valor de la Polaca es: "+b);
+         ExpresionRegular objExp = new ExpresionRegular(a.toString(),b.toString());
+        listaExpresiones.add(objExp);  
     
               CUP$Sintactico$result = parser.getSymbolFactory().newSymbol("instruccion",2, ((java_cup.runtime.Symbol)CUP$Sintactico$stack.elementAt(CUP$Sintactico$top-3)), ((java_cup.runtime.Symbol)CUP$Sintactico$stack.peek()), RESULT);
             }

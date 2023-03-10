@@ -6,6 +6,8 @@ import java.util.List;
 
 import Errores.Excepcion;
 
+import Objetos.ExpresionRegular;
+
 
 /* 2. Codigo para el parser, variables, metodos */
 parser code 
@@ -15,6 +17,9 @@ parser code
     //Creo una lista de tipo String llamada 'resultados', donde guardare cada uno de los resultados analizados
     public List<String> resultados = new ArrayList<String>();
 
+    //Lista de objetos con el ID y la expresion Regular
+    public List<ExpresionRegular> listaExpresiones = new ArrayList<ExpresionRegular>();
+ 
 
     //Lista de erros
     public ArrayList<Excepcion> Errores = new ArrayList();
@@ -86,10 +91,13 @@ instruccion ::=
 |   expresion:a FLECH exppolaca:b PTCOMA
 {:
         System.out.println("El valor de la expresión es: "+a);
+        System.out.println("El valor de la Polaca es: "+b);
     
         //Inserto en la lista el resultado de la expresión evaluada
          resultados.add("El valor de la Expresion es: "+a);
-         resultados.add("El valor de la Polaca es: "+b);
+         //listaExpresiones.add("El valor de la Polaca es: "+b);
+         ExpresionRegular objExp = new ExpresionRegular(a.toString(),b.toString());
+        listaExpresiones.add(objExp);  
     :}
 |   expresion:a DOSPTS ejempexp:b PTCOMA
 {:

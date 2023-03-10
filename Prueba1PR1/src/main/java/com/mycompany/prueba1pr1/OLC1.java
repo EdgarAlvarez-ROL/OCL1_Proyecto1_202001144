@@ -192,8 +192,8 @@ public class OLC1 extends javax.swing.JFrame {
             generarReporteHTML(errores);
 
             String result = "";
-            for (int i = 0; i < parse.resultados.size(); i++) {
-                result += parse.resultados.get(i) + '\n';
+            for (int i = 0; i < parse.listaExpresiones.size(); i++) {
+                result += parse.listaExpresiones.get(i).expolaca + '\n';
             }
             this.jTextArea2.setText(result);
 
