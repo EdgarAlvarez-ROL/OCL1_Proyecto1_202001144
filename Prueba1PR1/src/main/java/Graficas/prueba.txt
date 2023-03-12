@@ -1,0 +1,13 @@
+PADRE+
+d
+PADRE.
+p
++
+PADRE+
+d
+PADRE.
++
+.
+PADRE.
+.
+#

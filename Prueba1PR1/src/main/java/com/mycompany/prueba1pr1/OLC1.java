@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import Graficas.Clase4;
 
 /**
  *
@@ -148,10 +149,11 @@ public class OLC1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3)
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -159,12 +161,12 @@ public class OLC1 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -180,7 +182,10 @@ public class OLC1 extends javax.swing.JFrame {
         Analizadores.Lexico scanner;
         Analizadores.Sintactico parse;
         ArrayList<Excepcion> errores = new ArrayList();
-
+        
+        //Graficas.Clase4 cua = null;
+        Graficas.Clase4 cua;
+                
         try {
 
             scanner = new Lexico(new BufferedReader(new StringReader(jTextArea1.getText())));
@@ -192,8 +197,16 @@ public class OLC1 extends javax.swing.JFrame {
             generarReporteHTML(errores);
 
             String result = "";
+            String temp = "";
             for (int i = 0; i < parse.listaExpresiones.size(); i++) {
+                result += parse.listaExpresiones.get(i).id + '\n';
                 result += parse.listaExpresiones.get(i).expolaca + '\n';
+                temp = parse.listaExpresiones.get(i).expolaca;
+                cua = new Graficas.Clase4(temp);
+            }
+            
+            for (int i = 0; i < parse.resultados.size(); i++) {
+                result += parse.resultados.get(i) + '\n';
             }
             this.jTextArea2.setText(result);
 

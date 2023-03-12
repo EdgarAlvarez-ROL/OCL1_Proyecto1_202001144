@@ -34,26 +34,35 @@ import java.util.ArrayList;
 
 // Expresiones Regulares
 BLANCOS=[ \r\t]+
-D=[0-9]+
-DD=[0-9]+("."[  |0-9]+)?
+//D=[0-9]+
+//DD=[0-9]+("."[  |0-9]+)?
 
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 
-comentariosimple = "//" {InputCharacter}* {LineTerminator}?
-comentariovariaslineas = (\<\!(\s*|.*?)*\!\>)
-SEPARADOR = "%%"?
+FLECHA = "-" {BLANCOS}* ">"
+comil = \"|\(|\)
+
+//se traba si tiene comillas entre el comentario
+comentariosimple = "//"({comil}|{InputCharacter})*{LineTerminator}?
+//comentariovariaslineas = (<!({LineTerminator}*|{BLANCOS}|{D}|.*?|\!+[^<!])*\!+\>) 
+comentariovariaslineas = "<!" [^!] ~"!>" | "<!" "!"+ ">"
+
+
+//SEPARADOR = "%%"?
 
 CaracteresAscii = [\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}]
 CaracteresEspeciales = (\\(n)) | (\\(')) | (\\(')('))
 
-NotacionA = [a-zA-Z]\~[a-zA-Z] | [0-9]\~[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii}),)+([a-zA-Z0-9]|{CaracteresAscii})) | (\!\~\&) | {CaracteresAscii}  |  {CaracteresEspeciales}
+NotacionA = [a-zA-Z]{BLANCOS}*\~{BLANCOS}*[a-zA-Z] | [0-9]{BLANCOS}*\~{BLANCOS}*[0-9] | ((([a-zA-Z0-9]|{CaracteresAscii}),{BLANCOS}*)+([a-zA-Z0-9]|{CaracteresAscii})) | (\!\~\&) | {CaracteresAscii}  |  {CaracteresEspeciales}
 VariableA = [a-zA-Z_]+[a-zA-Z0-9_]*
 
-//ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(\;\"))+
-ExpresionPolacaA = [\.\+\|\?\*\\]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(({CaracteresAscii}|{CaracteresEspeciales}|\w|\d)+\"))+
+//ARREGLAS ESTA MIERDA NO LA DETECTA  (\"([\"a-zA-Z0-9nÑ_ ]|[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}])*\")
+EjemploExpresion = "\"" ({InputCharacter}*{CaracteresEspeciales}*)* "\""
 
-EjemploExpresion = (\"(\"|.*?)*\")
+//ExpresionPolacaA = [\.\+\|\?\*]+(\s|\{|\}|\w|\d|\"|\.|\+|\||\?|\*|(\;\"))+
+ExpresionPolacaA = ([\.\+\|\?\*\'\"\\]|{CaracteresEspeciales})+(\s|\\|\{|\}|\w|\d|\.|\+|\||\?|\*|{CaracteresEspeciales}|(({CaracteresAscii}|{BLANCOS}|{CaracteresEspeciales}|\w|\d)+\"))+
+
 
 %%
 /* 3. Reglas Semanticas*/
@@ -67,27 +76,25 @@ EjemploExpresion = (\"(\"|.*?)*\")
 "}" { System.out.println("Reconocio "+yytext()+" llave cierra"); return new Symbol(sym.LLAVDER,yyline,yychar, yytext());} 
 "{" { System.out.println("Reconocio "+yytext()+" llave abre"); return new Symbol(sym.LLAVIZQ,yyline,yychar, yytext());} 
 
-"->" { System.out.println("Reconocio "+yytext()+" flecha"); return new Symbol(sym.FLECH,yyline,yychar, yytext());} 
+//"->" { System.out.println("Reconocio "+yytext()+" flecha"); return new Symbol(sym.FLECH,yyline,yychar, yytext());} 
 ":" { System.out.println("Reconocio "+yytext()+" dos puntos"); return new Symbol(sym.DOSPTS,yyline,yychar, yytext());} 
+"%%" { System.out.println("Reconocio "+yytext()+" %%"); } 
 
-
+{FLECHA} { System.out.println("Reconocio "+yytext()+" flecha"); return new Symbol(sym.FLECH,yyline,yychar, yytext());} 
 
 \n {yychar=1;}
 
-{VariableA} {return new Symbol(sym.VARIABLE,yyline,yychar, yytext());} 
-{NotacionA} {return new Symbol(sym.NOTACION,yyline,yychar, yytext());} 
-{ExpresionPolacaA} {return new Symbol(sym.EXPOLACA,yyline,yychar, yytext());}
-{EjemploExpresion} {return new Symbol(sym.EJEXPRE,yyline,yychar, yytext());}
-
-
-
 {BLANCOS} {}
-{SEPARADOR} {}
+//{SEPARADOR} {}
+/* comments */
 {comentariosimple} {System.out.println("Comentario: "+yytext()); }
 {comentariovariaslineas} {System.out.println("Comentario Varias Lineas: "+yytext()); }
-//{D} {return new Symbol(sym.ENTERO,yyline,yychar, yytext());} 
-//{DD} {return new Symbol(sym.DECIMAL,yyline,yychar, yytext());} 
 
+
+{VariableA} {return new Symbol(sym.VARIABLE,yyline,yychar, yytext());} 
+{NotacionA} {return new Symbol(sym.NOTACION,yyline,yychar, yytext());} 
+{EjemploExpresion} {return new Symbol(sym.EJEXPRE,yyline,yychar, yytext());}
+{ExpresionPolacaA} {return new Symbol(sym.EXPOLACA,yyline,yychar, yytext());}
 
 
 

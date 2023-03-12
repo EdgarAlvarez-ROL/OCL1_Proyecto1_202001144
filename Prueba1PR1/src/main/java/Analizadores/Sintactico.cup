@@ -49,9 +49,9 @@ parser code
 
 /* 3. Terminales */
 terminal String PTCOMA,LLAVDER,LLAVIZQ;
+terminal String EJEXPRE;
 terminal String DOSPTS,PARDER,PARIZQ,VARIABLE;
 terminal String FLECH,NOTACION,EXPOLACA;
-terminal String EJEXPRE;
 terminal String PR_CONJ;
 
 
@@ -94,7 +94,7 @@ instruccion ::=
         System.out.println("El valor de la Polaca es: "+b);
     
         //Inserto en la lista el resultado de la expresión evaluada
-         resultados.add("El valor de la Expresion es: "+a);
+         //resultados.add("El valor de la Expresion es: "+a);
          //listaExpresiones.add("El valor de la Polaca es: "+b);
          ExpresionRegular objExp = new ExpresionRegular(a.toString(),b.toString());
         listaExpresiones.add(objExp);  
@@ -125,5 +125,5 @@ exppolaca   ::=
 ;
 
 ejempexp ::=
-    EJEXPRE:a                               {:RESULT=new String(a);:}
+   EJEXPRE:a                               {:RESULT=new String(a);:}
 ;

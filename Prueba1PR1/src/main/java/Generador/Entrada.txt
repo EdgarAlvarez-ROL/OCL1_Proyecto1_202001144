@@ -9,10 +9,10 @@ CONJ: digito -> 0~3; // Creamos el conjunto de digitos solo para 0,1,2 y 3
 
 
 //agregamos expresiones regulares
-identifacdor -> . {letra} * | "_" | {letra} {digito};
-decimales -> . +{digito} . "." + {digito};
+identifacdor -> . {letra} * | "_" | {letra} {digito}; 
+decimales -> . +{digito} . "." + {digito};  
 
-ER_cadena -> \" +{letra} \";
+ER_cadena - > .\".+{letra} \";
 
 
 %%
