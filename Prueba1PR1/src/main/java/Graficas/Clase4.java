@@ -11,7 +11,7 @@ public class Clase4{
 
     
     //public static void main(String[] args) throws Exception {
-      public Clase4(String er)throws Exception  {
+      public Clase4(String er,String contador)throws Exception  {
         /*
             Pasos del metodo del arbol:
             1. Aumentar la ER con el simbolo de aceptacion # y su concatenación
@@ -40,7 +40,7 @@ public class Clase4{
         
         modificarExp puta = new modificarExp(er);
         
-        Tree1 arbol = new Tree1(puta, leaves, table); // CREA EL ARBOL
+        Tree1 arbol = new Tree1(puta, leaves, table, contador); // CREA EL ARBOL
         node raiz = arbol.getRoot();
 
         raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
@@ -49,12 +49,12 @@ public class Clase4{
         
         System.out.println("==============================TABLA SIGUIENTES==============================");
         followTable ft = new followTable();
-        ft.printTable(table);
+        ft.printTable(table,contador);
         transitionTable tran = new transitionTable(raiz, table, leaves); // bug
         System.out.println("=============================TABLA TRANSICIONES=============================");
-        tran.impTable();
+        tran.impTable(contador);
         System.out.println("============================= GRAPHVIZ===============================================");
-        tran.impGraph();
+        tran.impGraph(contador);
         
         
     }

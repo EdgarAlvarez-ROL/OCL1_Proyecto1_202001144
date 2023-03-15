@@ -1,0 +1,36 @@
+digraph Arbol_Sintactico {
+
+node1[label = "."];
+node1 -> node10
+node10[label = "."];
+node10 -> node100
+node100[label = "\'"];
+node10 -> node101
+node101[label = "."];
+node101 -> node1010
+node1010[label = "+"];
+node1010 -> node10100
+node10100[label = "|"];
+node10100 -> node101000
+node101000[label = "|"];
+node101000 -> node1010000
+node1010000[label = "|"];
+node1010000 -> node10100000
+node10100000[label = "|"];
+node10100000 -> node101000000
+node101000000[label = "\n"];
+node10100000 -> node101000001
+node101000001[label = "{minus}"];
+node1010000 -> node10100001
+node10100001[label = "{mayus}"];
+node101000 -> node1010001
+node1010001[label = "{digito}"];
+node10100 -> node101001
+node101001[label = " "];
+node101 -> node1011
+node1011[label = "\'"];
+node1 -> node11
+node11[label = "#"];
+
+
+}

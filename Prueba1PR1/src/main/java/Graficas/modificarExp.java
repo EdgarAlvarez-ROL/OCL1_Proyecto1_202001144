@@ -22,7 +22,7 @@ public class modificarExp {
         //String cua = ". \\' . + | | | | \\n {minus} {mayus} {digito} \" \" \\'";
         cua = "."+cua+"#";
         String cadena = cua.replaceAll(" +","");
-        cadena = cadena.replaceAll("\"\""," ");
+        cadena = cadena.replaceAll("\"\"","\" \"");
         String expresion = "[a-zA-ZñÑ]([a-zA-ZñÑ]|[0-9]+|_)*";
         //cadena = cadena.replaceAll(expresion, "cua");
         
@@ -79,7 +79,7 @@ public class modificarExp {
             }else{
                 if (listilla[i].matches(expresion)) {
                     temporal = temporal + listilla[i];
-                }else if(listilla[i].matches(" ")){
+                }else if(listilla[i].matches("\" \"")){
                     temporal = temporal + listilla[i];
                 }else if(listilla[i].matches("\'")){
                     temporal = temporal + listilla[i];
@@ -96,7 +96,7 @@ public class modificarExp {
             }            
         }
         
-        System.out.println("final");
+        //System.out.println("final");
         System.out.println(this.puta);
         
         

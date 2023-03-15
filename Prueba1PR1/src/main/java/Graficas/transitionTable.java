@@ -102,20 +102,76 @@ public class transitionTable {
         }
     }
     
-    public void impTable(){
-        for(ArrayList state : states){
-            String tran = "[";
-            for(Object tr : (ArrayList)state.get(2)){
-                transicion t = (transicion) tr;
-                tran += t.toString() + ", ";           
+    public void impTable(String contador) throws IOException{
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            
+            String path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_Semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\TRANSICIONES_202001144\\tablaSiguientes"+contador+".html";
+            fichero = new FileWriter(path);
+            pw = new PrintWriter(fichero);
+            
+            //Comenzamos a escribir el html
+            pw.println("<html>");
+            pw.println("<head><title>TABLA DE TRANSICIONES </title></head>");
+            pw.println("<body>");
+            pw.println("<div align=\"center\">");
+            pw.println("<h1>Reporte de TRANSICIONES</h1>");
+            pw.println("<br></br>");
+            pw.println("<table border=1>");
+            pw.println("<tr>");
+            pw.println("<td>Estado</td>");
+            pw.println("<td>Terminal</td>");
+            pw.println("</tr>");
+
+            
+            for(ArrayList state : states){
+                String tran = "[";
+                for(Object tr : (ArrayList)state.get(2)){
+                    transicion t = (transicion) tr;
+                    tran += t.toString() + ", ";         
+                    //System.out.println(tran);
+                }
+                tran += "]";
+                tran = tran.replace(", ]", "]");
+                
+                pw.println("<tr>");
+                pw.println("<td>" + (state.get(0) + " " + state.get(1)) + "</td>");
+                pw.println("<td>" + " " + tran + " " + "</td>");
+                pw.println("</tr>");
+                
+                System.out.println(state.get(0) + " " + state.get(1) + " " + tran + " " + state.get(3));
+                
             }
-            tran += "]";
-            tran = tran.replace(", ]", "]");
-            System.out.println(state.get(0) + " " + state.get(1) + " " + tran + " " + state.get(3));
+
+            pw.println("</table>");
+            pw.println("</div");
+            pw.println("</body>");
+            pw.println("</html>");
+            //Desktop.getDesktop().open(new File(path));
+            
+            
+        } catch (Exception e) {
+        } finally {
+            if (null != fichero) {
+                fichero.close();
+            }
+        }
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     
-     public void impGraph(){
+     public void impGraph(String contador){
+        
+        String cadena = "digraph AFN {\n\n";
+        
+        FileWriter fichero = null;
+        PrintWriter escritor = null;
+        
+         //original
         for(ArrayList state : states){
             String graph = "";
             for(Object tr : (ArrayList)state.get(2)){
@@ -123,7 +179,50 @@ public class transitionTable {
                 graph += t.graph();
             }
             System.out.println(graph);
+            cadena += graph + "\n";
         }
+        //original
+        
+        cadena += "}";
+        
+        try{
+            //fichero = new FileWriter("Arbol_Sintactico"+i+".dot");
+            fichero = new FileWriter("C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\AFD_202001144\\"+"AFD"+contador+".txt");
+            
+            escritor = new PrintWriter(fichero);
+            escritor.println(cadena);
+            escritor.close();
+            fichero.close();
+            reportar(contador);
+       
+        } catch (Exception e) {
+            System.out.println("error en generar dot");
+            e.printStackTrace();
+        }
+        
+    }
+     
+    public void reportar(String i) throws IOException {
+        
+        String file_input_path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\AFD_202001144\\"+"AFD"+i+".txt";
+        
+        try {
+            ProcessBuilder pBuilder;
+            pBuilder = new ProcessBuilder("dot","-Tpng", "-O",file_input_path);
+            pBuilder.redirectErrorStream(true);
+            pBuilder.start();
+            //System.out.println("SE SUPONE QUE SI JALO ESTA MIERDA");
+            //system("dot -Tpng -O grafos/matrizAdyacencia.txt");
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+       
+     
+       //Desktop.getDesktop().open(new File(file_get_path));
     }
     
+     
+ 
+   
 }

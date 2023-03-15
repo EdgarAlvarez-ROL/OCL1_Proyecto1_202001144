@@ -16,8 +16,8 @@ public class Arbol {
     
      public void GraficarSintactico(String i){
   
-        String grafica = "Digraph Arbol_Sintactico{\n\n" + GraficaNodos(this.raiz, "0") + "\n\n}";        
-        System.out.println(grafica);
+        String grafica = "digraph Arbol_Sintactico {\n\n" + GraficaNodos(this.raiz, i) + "\n\n}";        
+        //System.out.println(grafica);
         GenerarDot(grafica, i);
 
     }
@@ -51,9 +51,13 @@ public class Arbol {
     private void GenerarDot(String cadena, String i){
         FileWriter fichero = null;
         PrintWriter escritor = null;
+        
+        System.out.println("GENERAR DOT EL I ES: "+i);;
+        
         try{
             //fichero = new FileWriter("Arbol_Sintactico"+i+".dot");
-            fichero = new FileWriter("C:\\Users\\wwwed\\Downloads\\OLC1-1S2023-main\\Ejemplo2\\src\\clase4\\"+"Arbol_Sintactico"+i+".dot");
+            fichero = new FileWriter("C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\ARBOLES_202001144\\"+"Arbol_Sintactico"+i+".txt");
+            
             escritor = new PrintWriter(fichero);
             escritor.println(cadena);
             escritor.close();
@@ -68,15 +72,18 @@ public class Arbol {
     
     public void reportar(String i) throws IOException {
         
-        String file_input_path = ("C:\\Users\\wwwed\\Downloads\\OLC1-1S2023-main\\Ejemplo2\\src\\clase4\\"+"Arbol_Sintactico"+i+".dot");
-        String do_path = "C:\\Program Files\\Graphviz\\bin\\dot.exe";
+        String file_input_path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\ARBOLES_202001144\\"+"Arbol_Sintactico"+i+".txt";
+        String do_path = "\\Program Files\\Graphviz\\bin\\dot.exe";
                                   //"C:\\Users\\wwwed\\Downloads\\OLC1-1S2023-main\\Ejemplo2\\src\\clase4\\prueba.txt"
-        String file_get_path   = ("C:\\Users\\wwwed\\Downloads\\"+"MIEDACUA"+i+".jpg");
+        String file_get_path   = ("MIEDACUA"+i+".png");
         try {
             ProcessBuilder pBuilder;
-            pBuilder = new ProcessBuilder(do_path, "-Tjpg", "-o", file_get_path, file_input_path);
+            pBuilder = new ProcessBuilder("dot","-Tpng", "-O",file_input_path);
             pBuilder.redirectErrorStream(true);
             pBuilder.start();
+            //System.out.println("SE SUPONE QUE SI JALO ESTA MIERDA");
+            //system("dot -Tpng -O grafos/matrizAdyacencia.txt");
+            
         } catch (IOException ex) {
             ex.printStackTrace();
         }

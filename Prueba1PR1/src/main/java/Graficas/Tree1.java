@@ -21,7 +21,7 @@ public class Tree1 {
     
     Nodo raiz;
 
-    public Tree1( modificarExp puta, ArrayList<node> leaves, ArrayList<ArrayList> table ) {
+    public Tree1( modificarExp puta, ArrayList<node> leaves, ArrayList<ArrayList> table, String contadorcua ) {
         
         numLeave1 numHoja = new numLeave1(puta.getPuta());
         
@@ -144,7 +144,7 @@ public class Tree1 {
         this.raiz = (Nodo) pila2.pop();
         //System.out.println(raiz.hijos.get(1).token);
         Arbol arbolito = new Arbol(raiz);
-        arbolito.GraficarSintactico("0");
+        arbolito.GraficarSintactico(contadorcua);
         
         this.root = (node) pila.pop();
         

@@ -202,7 +202,7 @@ public class OLC1 extends javax.swing.JFrame {
                 result += parse.listaExpresiones.get(i).id + '\n';
                 result += parse.listaExpresiones.get(i).expolaca + '\n';
                 temp = parse.listaExpresiones.get(i).expolaca;
-                cua = new Graficas.Clase4(temp);
+                cua = new Graficas.Clase4(temp,Integer.toString(i));
             }
             
             for (int i = 0; i < parse.resultados.size(); i++) {
@@ -224,7 +224,7 @@ public class OLC1 extends javax.swing.JFrame {
         PrintWriter pw = null;
         try {
             
-            String path = "Reporteerrores.html";
+            String path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\ERRORES_2020001144\\ReporteErrores.html";
             fichero = new FileWriter(path);
             pw = new PrintWriter(fichero);
             
