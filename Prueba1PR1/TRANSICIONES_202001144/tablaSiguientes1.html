@@ -7,23 +7,25 @@
 <table border=1>
 <tr>
 <td>Estado</td>
-<td>Terminal</td>
+<td>{digito}</td>
+<td>.</td>
 </tr>
 <tr>
-<td>S0 [-6]</td>
-<td> [S0 -> \' -> S1] </td>
+<td>S0 [-2]</td>
+<td>S1</td>
 </tr>
 <tr>
-<td>S1 [-4, -2, 0, 2, 4]</td>
-<td> [S1 -> \n -> S2, S1 -> {minus} -> S2, S1 -> {mayus} -> S2, S1 -> {digito} -> S2, S1 ->   -> S2] </td>
+<td>S1 [-2, 0]</td>
+<td>S1</td>
+<td>S2</td>
 </tr>
 <tr>
-<td>S2 [-4, -2, 0, 2, 4, 6]</td>
-<td> [S2 -> \n -> S2, S2 -> {minus} -> S2, S2 -> {mayus} -> S2, S2 -> {digito} -> S2, S2 ->   -> S2, S2 -> \' -> S3] </td>
+<td>S2 [2]</td>
+<td>S3</td>
 </tr>
 <tr>
-<td>S3 [8]</td>
-<td> [] </td>
+<td>S3 [2, 4]</td>
+<td>S3</td>
 </tr>
 </table>
 </div

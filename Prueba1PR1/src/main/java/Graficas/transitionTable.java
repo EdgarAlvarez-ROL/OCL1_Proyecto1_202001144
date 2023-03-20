@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,8 +19,12 @@ public class transitionTable {
     public ArrayList<ArrayList> states;
     public int cont;
     
+    public ArrayList<String> transiciones;
+    
     public transitionTable(node root, ArrayList tabla, ArrayList<node> leaves) {
         this.states = new ArrayList();
+        
+        this.transiciones = new ArrayList();
         
         ArrayList datos = new ArrayList();
         datos.add("S0");
@@ -75,6 +80,7 @@ public class transitionTable {
                     
                     cont += 1;
                     states.add(nuevo);
+                    transiciones.add((String) lexemeNext.get(0));
                 
                 }
                 else{
@@ -100,6 +106,8 @@ public class transitionTable {
             }
             
         }
+        
+        
     }
     
     public void impTable(String contador) throws IOException{
@@ -121,26 +129,53 @@ public class transitionTable {
             pw.println("<table border=1>");
             pw.println("<tr>");
             pw.println("<td>Estado</td>");
-            pw.println("<td>Terminal</td>");
+            // ARREGLAR
+            //System.out.println(transiciones);
+            //HACER LISTA SIN TRANSICIONES REPETIDAS
+            ArrayList<String> temporalTrans = new ArrayList<>();
+            for(int add=0;add<transiciones.size();add++){
+                boolean existe = temporalTrans.contains(transiciones.get(add));
+                if (existe == false){
+                    temporalTrans.add(transiciones.get(add));
+                }
+            }
+            //COLOCAR LAS CABECERAS DE LAS TRANSICIONES EN EL HTML
+            for(int add=0;add<temporalTrans.size();add++){
+                pw.println("<td>"+ temporalTrans.get(add) +"</td>");
+            }
             pw.println("</tr>");
 
-            
+            //Agregando las transiciones segun el S_
             for(ArrayList state : states){
                 String tran = "[";
-                for(Object tr : (ArrayList)state.get(2)){
-                    transicion t = (transicion) tr;
-                    tran += t.toString() + ", ";         
-                    //System.out.println(tran);
-                }
-                tran += "]";
-                tran = tran.replace(", ]", "]");
                 
                 pw.println("<tr>");
                 pw.println("<td>" + (state.get(0) + " " + state.get(1)) + "</td>");
-                pw.println("<td>" + " " + tran + " " + "</td>");
+                
+                for(Object tr : (ArrayList)state.get(2)){
+                    transicion t = (transicion) tr;
+                    tran += t.toString() + ", ";         
+                    //System.out.println(t.toString());
+                    
+                    
+                    for(int add=0;add<temporalTrans.size();add++){
+                            if ((t.getTransiciones()).equals(temporalTrans.get(add)) ){
+                                pw.println("<td>" + t.getFinalState() + "</td>");
+                            }
+                            /* else{
+                                pw.println("<td> -- </td>");
+                            }*/
+                    }
+                }
                 pw.println("</tr>");
                 
+                tran += "]";
+                tran = tran.replace(", ]", "]");
                 System.out.println(state.get(0) + " " + state.get(1) + " " + tran + " " + state.get(3));
+                
+                
+                
+                
                 
             }
 
@@ -162,6 +197,8 @@ public class transitionTable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        
     }
     
      public void impGraph(String contador){

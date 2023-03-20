@@ -31,4 +31,16 @@ public class transicion {
     public String graph(){
         return this.initialState +  "->"  + this.finalState + "[label=\"" + this.transition + "\"]";
     }
+    
+    public String getTransiciones(){
+        return this.transition;
+    }
+    
+    public String getInitialState(){
+        return this.transition;
+    }
+    
+    public String getFinalState(){
+        return this.finalState;
+    }
 }

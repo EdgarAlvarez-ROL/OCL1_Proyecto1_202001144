@@ -41,10 +41,10 @@ LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
 
 FLECHA = "-" {BLANCOS}* ">"
-comil = \"|\(|\)
+
 
 //se traba si tiene comillas entre el comentario
-comentariosimple = "//"({comil}|{InputCharacter})*{LineTerminator}?
+comentariosimple = "//"("\""|{InputCharacter})*{LineTerminator}?
 //comentariovariaslineas = (<!({LineTerminator}*|{BLANCOS}|{D}|.*?|\!+[^<!])*\!+\>) 
 comentariovariaslineas = "<!" [^!] ~"!>" | "<!" "!"+ ">"
 

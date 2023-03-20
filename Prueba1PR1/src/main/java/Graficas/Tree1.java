@@ -121,10 +121,17 @@ public class Tree1 {
                     
                     
                     break;
+                case " ":
+                    break;
                 default:
                     if ("\\\"".equals(character)){
                         character = "comilla";
+                    }else if("\" \"".equals(character)){
+                        character = "espacio";
+                    }else if("\\\n".equals(character)){
+                        character = "enter";
                     }
+                    
                     node nd = new node(character.replaceAll("\"", ""), Types.HOJA, numHoja.getNum(), null, null, leaves, table);
                     pila.push(nd); //Contruir el arbol
                     leave hoja = new leave();
