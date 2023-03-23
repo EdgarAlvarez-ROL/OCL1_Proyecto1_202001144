@@ -14,7 +14,6 @@ decimales -> . +{digito} . "." + {digito};
 
 ER_cadena - > .\".+{letra} \";
 
-
 %%
 
 

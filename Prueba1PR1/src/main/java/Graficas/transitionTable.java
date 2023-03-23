@@ -145,19 +145,17 @@ public class transitionTable {
             }
             pw.println("</tr>");
 
+            
+            
             //Agregando las transiciones segun el S_
             for(ArrayList state : states){
                 String tran = "[";
-                
                 pw.println("<tr>");
                 pw.println("<td>" + (state.get(0) + " " + state.get(1)) + "</td>");
-                
                 for(Object tr : (ArrayList)state.get(2)){
                     transicion t = (transicion) tr;
                     tran += t.toString() + ", ";         
                     //System.out.println(t.toString());
-                    
-                    
                     for(int add=0;add<temporalTrans.size();add++){
                             if ((t.getTransiciones()).equals(temporalTrans.get(add)) ){
                                 pw.println("<td>" + t.getFinalState() + "</td>");
@@ -215,6 +213,9 @@ public class transitionTable {
                 transicion t = (transicion) tr;
                 graph += t.graph();
             }
+            if ((state.get(3).toString())=="true"){
+                    graph += "\n" + state.get(0) + " [shape=doublecircle]"; //S3 [shape=doublecircle]
+            }
             System.out.println(graph);
             cadena += graph + "\n";
         }
@@ -260,6 +261,5 @@ public class transitionTable {
     }
     
      
- 
    
 }

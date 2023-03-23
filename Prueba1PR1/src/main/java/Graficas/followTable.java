@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 
 public class followTable {
-    public void append(int numNode, String lexeme, ArrayList flwList, ArrayList<ArrayList> table){
+    public void append(int numNode, String lexeme, ArrayList flwList, ArrayList<ArrayList> table, String tipo){
         for (ArrayList item : table){
             if( (int) item.get(0) == numNode && item.get(1) == lexeme ){
                 for (Object flwItem : flwList){
@@ -30,7 +30,9 @@ public class followTable {
         dato.add(numNode);
         dato.add(lexeme);
         dato.add(flwList);
-        
+        //AFND
+        dato.add(tipo);
+        //FIN AFND
         table.add(dato);
     }
     
@@ -48,6 +50,24 @@ public class followTable {
     return result;
     }
     
+     public ArrayList nextAFND(int numNode, ArrayList<ArrayList> table){
+        ArrayList result = new ArrayList();
+        for(ArrayList item : table){
+            if( (int) item.get(0) == numNode ){
+                result.add(item.get(1));
+                result.add(((ArrayList)item.get(2)).clone());
+                //AFND
+                result.add(item.get(3));
+                return result;
+            }
+        }
+        result.add("");
+        result.add(new ArrayList());
+    return result;
+    }
+    
+    
+    
     public void printTable(ArrayList<ArrayList> table,String contador) throws IOException{
         for(ArrayList item : table){
             System.out.println(item.get(0) + " - " + item.get(1) + " - " + item.get(2) );
@@ -55,13 +75,13 @@ public class followTable {
         tablaSiguientesHTML(table,contador);
     }
     
-    //HCAER HTML
+    //HACER HTML
     public static void tablaSiguientesHTML(ArrayList<ArrayList> table, String contador) throws IOException {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try {
             
-            String path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\7mo Semestre\\LAB COMPI\\Ejemplo1\\Prueba1PR1\\SIGUIENTES_202001144\\tablaSiguientes"+contador+".html";
+            String path = "C:\\Users\\wwwed\\OneDrive\\Escritorio\\septimo_semestre\\LAB_COMPI\\Ejemplo1\\Prueba1PR1\\SIGUIENTES_202001144\\tablaSiguientes"+contador+".html";
             fichero = new FileWriter(path);
             pw = new PrintWriter(fichero);
             
@@ -81,9 +101,10 @@ public class followTable {
 
             for(ArrayList item : table){
                 pw.println("<tr>");
-                 pw.println("<td>" + item.get(0) + "</td>");
+                pw.println("<td>" + item.get(0) + "</td>");
                 pw.println("<td>" + item.get(1) + "</td>");
                 pw.println("<td>" + item.get(2) + "</td>");
+                //pw.println("<td>" + item.get(3) + "</td>");
                 pw.println("</tr>");
             }
 

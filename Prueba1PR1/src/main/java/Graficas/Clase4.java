@@ -44,19 +44,29 @@ public class Clase4{
         node raiz = arbol.getRoot();
 
         raiz.getNode(); // DETERMINA SI LOS NODOS SON ANULABLES, SUS PRIMEROS Y ULTIMOS
+        
+        // Copiando la raiz original
+        //node raizAFND = raiz;
+        //raizAFND.followAFND();
+        // FIN tranasAFND
+        
         raiz.follow();
         
+       
         
-        System.out.println("==============================TABLA SIGUIENTES==============================");
+        System.out.println("============================== TABLA SIGUIENTES ==============================");
         followTable ft = new followTable();
         ft.printTable(table,contador);
         transitionTable tran = new transitionTable(raiz, table, leaves); // bug
-        System.out.println("=============================TABLA TRANSICIONES=============================");
+        System.out.println("============================= TABLA TRANSICIONES =============================");
         tran.impTable(contador);
-        System.out.println("============================= GRAPHVIZ===============================================");
+        System.out.println("============================= GRAPHVIZ ===============================================");
         tran.impGraph(contador);
         
         
+        //System.out.println("=========================== GRAPHVIZ AFND =============================================");
+        //transAFND tranpacAFND = new transAFND(raizAFND, table, leaves); // es
+        //tranpacAFND.impTable();
     }
 
    

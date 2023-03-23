@@ -26,7 +26,8 @@ public class modificarExp {
         String expresion = "[a-zA-ZñÑ]([a-zA-ZñÑ]|[0-9]+|_)*";
         //cadena = cadena.replaceAll(expresion, "cua");
         
-        System.out.println(cadena);
+        //FUNCIONA NECESARIO
+        //System.out.println(cadena);
         
         String cualquierMamada = "[\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\=\\>\\?\\@\\[\\\\\\]\\^\\_\\`\\{\\|\\}]";
         
@@ -97,7 +98,8 @@ public class modificarExp {
         }
         
         //System.out.println("final");
-        System.out.println(this.puta);
+        //FUNCIONA NECESARIO
+        //System.out.println(this.puta);
         
         
     }

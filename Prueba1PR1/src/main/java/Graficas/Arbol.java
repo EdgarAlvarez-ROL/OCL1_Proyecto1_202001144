@@ -26,6 +26,7 @@ public class Arbol {
         int k=0; 
         String r = "";
         String nodoTerm = nodo.token;
+        //System.out.println(nodoTerm);
      
         nodoTerm = nodoTerm.replace("\"", "");
         r= "node" + i + "[label = \"" + nodoTerm + "\"];\n";
@@ -52,7 +53,7 @@ public class Arbol {
         FileWriter fichero = null;
         PrintWriter escritor = null;
         
-        System.out.println("GENERAR DOT EL I ES: "+i);;
+       // System.out.println("GENERAR DOT EL I ES: "+i);;
         
         try{
             //fichero = new FileWriter("Arbol_Sintactico"+i+".dot");

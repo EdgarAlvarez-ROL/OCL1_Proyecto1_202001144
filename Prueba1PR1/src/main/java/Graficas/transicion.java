@@ -32,6 +32,10 @@ public class transicion {
         return this.initialState +  "->"  + this.finalState + "[label=\"" + this.transition + "\"]";
     }
     
+    public String finalCirclegraph(){
+        return this.initialState +  "->"  + this.finalState + "[label=\"" + this.transition + "\"" + "shape=doublecircle" +"]";
+    }
+    
     public String getTransiciones(){
         return this.transition;
     }
@@ -42,5 +46,10 @@ public class transicion {
     
     public String getFinalState(){
         return this.finalState;
+    }
+    
+    // PARA LOS AFND
+    public String getEtrans(){
+        return this.initialState + " -> " + "e" + this.finalState;
     }
 }

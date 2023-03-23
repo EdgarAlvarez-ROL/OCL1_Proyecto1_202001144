@@ -122,7 +122,7 @@ public class node {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
-                    tabla.append(nodo.number, nodo.lexeme, ((node) rightFollow).first, table);
+                    tabla.append(nodo.number, nodo.lexeme, ((node) rightFollow).first, table,"AND");
                 }
                 break;
             case KLEENE:
@@ -130,7 +130,7 @@ public class node {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
-                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table);
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table, "KLEENE");
                 }
                 break;
             case PKLEENE:
@@ -138,7 +138,7 @@ public class node {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
-                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table);
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table, "PKLEENE");
                 }
                 break;
             case QUESTION:
@@ -146,7 +146,7 @@ public class node {
                     leave hoja = new leave();
                     node nodo = hoja.getLeave(item, leaves);
                     followTable tabla = new followTable();
-                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table);
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollow).first, table, "QUESTION");
                 }
                 break;
             default:
@@ -155,6 +155,61 @@ public class node {
         
         return this;
     }
+    
+    
+    public Object followAFND(){
+        Object leftFollowAFND  =  this.left instanceof node ? ((node) this.left).followAFND() : null;
+        Object rightFollowAFND =  this.right instanceof node ? ((node) this.right).followAFND() : null;
+        
+        if(null != this.type)switch (this.type) {
+            case AND:
+                for (int item : ((node)leftFollowAFND).last) {
+                    leave hoja = new leave();
+                    node nodo = hoja.getLeave(item, leaves);
+                    followTable tabla = new followTable();
+                    tabla.append(nodo.number, nodo.lexeme, ((node) rightFollowAFND).first, table,"AND");
+                }
+                break;
+            case OR:
+                //System.out.println("============ ENTRAMOS EN UN OR ============");
+                for (int item : ((node)leftFollowAFND).last) {
+                    leave hoja = new leave();
+                    node nodo = hoja.getLeave(item, leaves);
+                    followTable tabla = new followTable();
+                    tabla.append(nodo.number, nodo.lexeme, ((node) rightFollowAFND).first, table,"OR");
+                }
+                break; 
+            case KLEENE:
+                for (int item : ((node)leftFollowAFND).last) {
+                    leave hoja = new leave();
+                    node nodo = hoja.getLeave(item, leaves);
+                    followTable tabla = new followTable();
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollowAFND).first, table, "KLEENE");
+                }
+                break;
+            case PKLEENE:
+                 for (int item : ((node)leftFollowAFND).last) {
+                    leave hoja = new leave();
+                    node nodo = hoja.getLeave(item, leaves);
+                    followTable tabla = new followTable();
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollowAFND).first, table, "PKLEENE");
+                }
+                break;
+            case QUESTION:
+                for (int item : ((node)leftFollowAFND).last) {
+                    leave hoja = new leave();
+                    node nodo = hoja.getLeave(item, leaves);
+                    followTable tabla = new followTable();
+                    tabla.append(nodo.number, nodo.lexeme, ((node) leftFollowAFND).first, table, "QUESTION");
+                }
+                break;
+            default:
+                break;
+        }
+        
+        return this;
+    }
+    
     
 }
 

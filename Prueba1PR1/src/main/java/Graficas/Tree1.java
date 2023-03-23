@@ -132,12 +132,14 @@ public class Tree1 {
                         character = "enter";
                     }
                     
+                    //ordenar para el arbol, los siguientes transiciones etc
                     node nd = new node(character.replaceAll("\"", ""), Types.HOJA, numHoja.getNum(), null, null, leaves, table);
                     pila.push(nd); //Contruir el arbol
                     leave hoja = new leave();
                     hoja.addLeave(nd, leaves); //Tabla de siguientes o transiciones
                     
                     //System.out.println(nd.lexeme);
+                    //GRAFICAR ARBOL
                     Nodo n_d = new Nodo(character,"",numHoja.getNum(),null,null);
                     pila2.push(n_d);
                     
